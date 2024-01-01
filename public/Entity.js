@@ -1,14 +1,13 @@
 import Convex from './utils/Convex'
 
 class Entity {
-    constructor(x, y, color, type, points) {
-        this.x = x
-        this.y = y
+    // Entities are defined by their center (x, y) and boundary points
+    constructor(color, type, points) {
         this.color = color
         this.type = type
         this.points = points
         this.collisions = []
-        this.associatedEntities = []
+        this.associatedEntities = [this]
     }
 
     static Types = {
@@ -39,6 +38,20 @@ class Entity {
         const otherHitbox = otherEntity.getHitbox()
         return hitbox.isColliding(otherHitbox)
     }
+
+    handleCollision() {
+        for (let i = 0; i < this.collisions.length; i++) {
+            const collision = this.collisions[i]
+            console.log(this.color + " colliding with: " + collision.color)
+        }
+    }
+
+    update() {
+        if (this.collisions.length > 0) {
+            this.handleCollision()
+        }
+    }
+
 }
 
 export default Entity

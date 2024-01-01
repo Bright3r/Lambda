@@ -2,11 +2,13 @@ import Entity from './Entity.js'
 
 class Sword extends Entity {
     constructor(x, y, width, color,) {
-        super(x, y, color, Entity.Types.Weapon,
+        super(color, Entity.Types.Weapon,
             [{ x: x + width, y: y + width },
             { x: x + width, y: y - width },
             { x: x - width, y: y - width },
             { x: x - width, y: y + width }])
+        this.x = x
+        this.y = y
         this.width = width
         this.swordLength = 75
         this.mouseX = x + 50
@@ -19,7 +21,7 @@ class Sword extends Entity {
         window.addEventListener('mousemove', handleMouseMove)
     }
 
-    getSwordTipPos() {
+    getSwordDirectionVector() {
         const dx = this.mouseX - this.x
         const dy = this.mouseY - this.y
 
@@ -30,9 +32,9 @@ class Sword extends Entity {
         return { swordTipX, swordTipY }
     }
 
-    getPoints() {
+    positionToHitbox() {
         // a sword is just a line from the player in the direction of the cursor
-        const { swordTipX, swordTipY } = this.getSwordTipPos()   
+        const { swordTipX, swordTipY } = this.getSwordDirectionVector()   
         const angle = -Math.atan2(swordTipY, swordTipX)
         // offsets needed to construct a rectangular hitbox for sword
         const swordOffsets = { 
@@ -51,7 +53,9 @@ class Sword extends Entity {
     update(x, y) {
         this.x = x
         this.y = y
-        super.points = this.getPoints()
+        super.points = this.positionToHitbox()
+
+        super.update()
     }
 
 }

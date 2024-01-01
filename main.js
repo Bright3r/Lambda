@@ -1,6 +1,6 @@
 import './style.css'
 import Player from './public/Player'
-import Convex from './public/utils/Convex'
+import Wall from './public/Wall'
 import EntityManager from './public/EntityManager'
 
 const GAME_DIMENSIONS = {
@@ -49,30 +49,12 @@ const clearScreen = (context) => {
 // TEMP ENTITIES
 const player = new Player(400, 400, 25, 100, "red")
 const enemy = new Player(500, 500, 25, 100, "green")
+const borders = Wall.createBorder(GAME_DIMENSIONS.width, GAME_DIMENSIONS.height)
 
 const manager = new EntityManager()
 manager.addEntity(player)
 manager.addEntity(enemy)
-
-// const points = [
-//   { x: 100, y: 100 },
-//   { x: 120, y: 100 },
-//   { x: 130, y: 200 },
-//   { x: 110, y: 200 }
-// ]
-// const points2 = [
-//   { x: 120, y: 150 },
-//   { x: 220, y: 200 },
-//   { x: 220, y: 300 },
-//   { x: 200, y: 300 }
-// ]
-// const testHitbox = new Convex(points)
-// const testHitbox2 = new Convex(points2)
-// console.log(testHitbox.isColliding(testHitbox2))
-
-
-
-
+borders.forEach(wall => manager.addEntity(wall))
 
 
 
@@ -81,13 +63,11 @@ const gameLoop = () => {
 
   manager.update()
 
-  player.update(GAME_DIMENSIONS)
+  player.update()
   player.draw(context)
 
+  enemy.update()
   enemy.draw(context)
-
-  // testHitbox.draw(context)
-  // testHitbox2.draw(context)
 
   requestAnimationFrame(gameLoop)
 }
