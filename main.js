@@ -48,13 +48,13 @@ const clearScreen = (context) => {
 
 // TEMP ENTITIES
 const player = new Player(400, 400, 25, 100, "red")
-const enemy = new Player(500, 500, 25, 100, "green")
-const borders = Wall.createBorder(GAME_DIMENSIONS.width, GAME_DIMENSIONS.height)
+const enemy = new Player(400, 200, 25, 100, "green")
+const testWall = new Wall(100, 500, 300, 50)
 
 const manager = new EntityManager()
 manager.addEntity(player)
 manager.addEntity(enemy)
-borders.forEach(wall => manager.addEntity(wall))
+manager.addEntity(testWall)
 
 
 
@@ -63,11 +63,14 @@ const gameLoop = () => {
 
   manager.update()
 
-  player.update()
+  player.update(GAME_DIMENSIONS)
   player.draw(context)
 
-  enemy.update()
+  enemy.update(GAME_DIMENSIONS)
   enemy.draw(context)
+
+  testWall.update()
+  testWall.draw(context)
 
   requestAnimationFrame(gameLoop)
 }

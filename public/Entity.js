@@ -2,7 +2,9 @@ import Convex from './utils/Convex'
 
 class Entity {
     // Entities are defined by their center (x, y) and boundary points
-    constructor(color, type, points) {
+    constructor(x, y, color, type, points) {
+        this.x = x
+        this.y = y
         this.color = color
         this.type = type
         this.points = points
@@ -14,6 +16,10 @@ class Entity {
         Player: "player",
         Weapon: "weapon",
         Border: "border"
+    }
+
+    getCenter() {
+        return { x, y }
     }
 
     getHitbox() {
@@ -36,13 +42,14 @@ class Entity {
     checkCollision(otherEntity) {
         const hitbox = this.getHitbox()
         const otherHitbox = otherEntity.getHitbox()
-        return hitbox.isColliding(otherHitbox)
+        const collision =  hitbox.isColliding(otherHitbox)
+        return collision
     }
 
     handleCollision() {
         for (let i = 0; i < this.collisions.length; i++) {
             const collision = this.collisions[i]
-            console.log(this.color + " colliding with: " + collision.color)
+            console.log(collision)
         }
     }
 

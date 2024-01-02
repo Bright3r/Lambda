@@ -2,7 +2,7 @@ import Entity from './Entity.js'
 
 class Sword extends Entity {
     constructor(x, y, width, color,) {
-        super(color, Entity.Types.Weapon,
+        super(x, y, color, Entity.Types.Weapon,
             [{ x: x + width, y: y + width },
             { x: x + width, y: y - width },
             { x: x - width, y: y - width },

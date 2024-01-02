@@ -44,20 +44,40 @@ class Convex {
 
     isColliding(otherConvex) {
         const allAxes = this.getAxes().concat(otherConvex.getAxes())
+        let mvtVector = null
+        let mvtMagnitude = Number.MAX_SAFE_INTEGER
+
+        let overlaps = []
 
         for (let idx = 0; idx < allAxes.length; idx++) {
-            const axis = allAxes.at(idx)
-            if (!this.isOverlappingOnAxis(axis, otherConvex)) {
-                return false
+            const axis = allAxes[idx]
+            const overlap = this.getOverlapOnAxis(axis, otherConvex)
+            if (overlap < 0) {  // this means there is no overlap so there is a separating axis
+                return {
+                    isColliding: false,
+                    mvtVector: null,
+                    mvtMagnitude: null
+                }
+            }
+            overlaps.push(overlap)
+            if (overlap < mvtMagnitude) {
+                mvtMagnitude = overlap
+                mvtVector = axis
             }
         }
-        return true
+        return { 
+            isColliding: true,
+            mvtVector,
+            mvtMagnitude,
+            overlaps,
+            allAxes
+        }
     }
 
-    isOverlappingOnAxis(axis, otherConvex) {
+    getOverlapOnAxis(axis, otherConvex) {
         const proj1 = this.project(axis)
         const proj2 = otherConvex.project(axis)
-        return proj1.isOverlapping(proj2)
+        return proj1.getOverlap(proj2)
     }
 
     project(axis) {
