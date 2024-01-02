@@ -43,7 +43,7 @@ const handleKeyUp = e => {
 }
 
 const clearScreen = (context) => {
-  context.clearRect(0, 0, canvas.width, canvas.height)
+  context.clearRect(0, 0, GAME_DIMENSIONS.width, GAME_DIMENSIONS.height)
 }
 
 // TEMP ENTITIES
@@ -63,11 +63,11 @@ const gameLoop = () => {
 
   manager.update()
 
-  player.update(GAME_DIMENSIONS)
-  player.draw(context)
-
   enemy.update(GAME_DIMENSIONS)
   enemy.draw(context)
+
+  player.update(GAME_DIMENSIONS)
+  player.draw(context)
 
   testWall.update()
   testWall.draw(context)

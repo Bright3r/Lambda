@@ -19,12 +19,13 @@ class EntityManager {
         for (let i = 0; i < this.entities.length; i++) {
             const entity1 = this.entities[i]
             entity1.collisions = [] // reset collisions every frame
-            for (let j = i + 1; j < this.entities.length; j++) {
+            for (let j = 0; j < this.entities.length; j++) {
+                if (j === i) continue;
+
                 const entity2 = this.entities[j]
                 const collision = entity1.checkCollision(entity2)
                 if (collision.isColliding && !entity1.isFriendly(entity2)) {
                     entity1.collisions.push({ entity: entity2, ...collision })
-                    entity2.collisions.push({ entity: entity1, ...collision })
                 }
             }
         }

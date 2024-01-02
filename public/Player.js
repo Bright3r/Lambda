@@ -18,7 +18,7 @@ class Player extends Entity {
             dyUp: 0,
             dyDown: 0
         }
-        this.sword = new Sword(x, y, 5, "white")
+        this.sword = new Sword(x, y, 10, "white")
 
         // setup entity group while instantiating
         this.associatedEntities.push(this.sword)
@@ -33,17 +33,24 @@ class Player extends Entity {
         ]
     }
 
-    resolveCollision(collision) {
-        const otherEntity = collision.entity
-        const dx = this.x - otherEntity.x
-        const dy = this.y - otherEntity.y
-        const dist = Math.sqrt(dx**2 + dy**2)
+    resolveGameBorderCollision(gameDimensions) {
+        if (this.x - this.radius < 1) {
+            this.x = 1 + this.radius
+        }
+        else if (this.x + this.radius > gameDimensions.width) {
+            this.x = gameDimensions.width - this.radius - 1
+        }
 
-        const mvtX = dx * collision.mvtMagnitude / dist
-        const mvtY = dy * collision.mvtMagnitude / dist
+        if (this.y - this.radius < 1) {
+            this.y = 1 + this.radius
+        }
+        else if (this.y + this.radius > gameDimensions.height) {
+            this.y = gameDimensions.height - this.radius - 1
+        }
+    }
 
-        this.x += mvtX
-        this.y += mvtY
+    printCollisions() {
+        console.log(this.collisions)
     }
 
     draw(context) {
@@ -51,28 +58,18 @@ class Player extends Entity {
         this.sword.draw(context)
     }
 
-    handleBorder(GAME_DIMENSIONS) {
-        if (this.x - this.radius < 1) {
-            this.x = 1 + this.radius
-        }
-        else if (this.x + this.radius > GAME_DIMENSIONS.width) {
-            this.x = GAME_DIMENSIONS.width - this.radius - 1
-        }
-
-        if (this.y - this.radius < 1) {
-            this.y = 1 + this.radius
-        }
-        else if (this.y + this.radius > GAME_DIMENSIONS.height) {
-            this.y = GAME_DIMENSIONS.height - this.radius - 1
-        }
-    }
-
-    update(GAME_DIMENSIONS) {
-        this.handleBorder(GAME_DIMENSIONS)
+    update(gameDimensions) {
+        this.resolveGameBorderCollision(gameDimensions)
 
         for (let i = 0; i < this.collisions.length; i++) {
             const collision = this.collisions[i]
             if (collision.entity.type === Entity.Types.Border) {
+                this.resolveCollision2(collision)
+            }
+            else if (collision.entity.type === Entity.Types.Weapon) {
+                this.resolveCollision(collision)    // less prone to clipping
+            }
+            else if (collision.entity.type === Entity.Types.Player) {
                 this.resolveCollision(collision)
             }
         }

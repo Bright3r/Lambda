@@ -42,21 +42,42 @@ class Entity {
     checkCollision(otherEntity) {
         const hitbox = this.getHitbox()
         const otherHitbox = otherEntity.getHitbox()
-        const collision =  hitbox.isColliding(otherHitbox)
+        const collision =  hitbox.getCollision(otherHitbox)
         return collision
     }
 
-    handleCollision() {
-        for (let i = 0; i < this.collisions.length; i++) {
-            const collision = this.collisions[i]
-            console.log(collision)
+    resolveCollision(collision) {
+        // moves the entity away from the center of the colliding entity
+        const otherEntity = collision.entity
+        const dx = this.x - otherEntity.x
+        const dy = this.y - otherEntity.y
+        const dist = Math.sqrt(dx**2 + dy**2)
+
+        const mvtX = dx * collision.mvtMagnitude / dist
+        const mvtY = dy * collision.mvtMagnitude / dist
+
+        this.x += mvtX
+        this.y += mvtY
+    }
+
+    resolveCollision2(collision) {
+        // ------------> SAT static resolution <------------
+        // collisions are checked preferentially on left/bottom face first
+        // this is just an easy fix for when edge normal is inverted
+        const otherEntity = collision.entity
+        if (this.x > otherEntity.x) {
+            collision.mvtVector.i *= -1
         }
+        if (this.y < otherEntity.y) {
+            collision.mvtVector.j *= -1
+        }
+
+        this.x += collision.mvtVector.i * collision.mvtMagnitude
+        this.y += collision.mvtVector.j * collision.mvtMagnitude
     }
 
     update() {
-        if (this.collisions.length > 0) {
-            this.handleCollision()
-        }
+
     }
 
 }

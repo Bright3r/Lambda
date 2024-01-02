@@ -8,10 +8,6 @@ class Convex {
         this.points = points
     }
 
-    print() {
-        console.log("hi")
-    }
-
     decomposeShapeToVectors() {
         let vectors = []
         for (let idx = 1; idx < this.points.length; idx++) {
@@ -42,12 +38,10 @@ class Convex {
         return normalVectors
     }
 
-    isColliding(otherConvex) {
+    getCollision(otherConvex) {
         const allAxes = this.getAxes().concat(otherConvex.getAxes())
         let mvtVector = null
         let mvtMagnitude = Number.MAX_SAFE_INTEGER
-
-        let overlaps = []
 
         for (let idx = 0; idx < allAxes.length; idx++) {
             const axis = allAxes[idx]
@@ -59,7 +53,6 @@ class Convex {
                     mvtMagnitude: null
                 }
             }
-            overlaps.push(overlap)
             if (overlap < mvtMagnitude) {
                 mvtMagnitude = overlap
                 mvtVector = axis
@@ -68,9 +61,7 @@ class Convex {
         return { 
             isColliding: true,
             mvtVector,
-            mvtMagnitude,
-            overlaps,
-            allAxes
+            mvtMagnitude
         }
     }
 
@@ -101,9 +92,9 @@ class Convex {
         context.beginPath()
         context.moveTo(this.points[0].x, this.points[0].y)
         for (let idx = 1; idx < this.points.length; idx++) {
-            context.lineTo(this.points[idx].x, this.points[idx].y)
+            const nextPoint = this.points[idx % this.points.length]
+            context.lineTo(nextPoint.x, nextPoint.y)
         }
-        context.lineTo(this.points[0].x, this.points[0].y)
         context.fill()
     }
 }
