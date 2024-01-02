@@ -8,6 +8,24 @@ class Convex {
         this.points = points
     }
 
+    // constructs an equilateral polygon and returns its Convex
+    static constructPolygon(x, y, sideLength, numSides, rotationAngle) {
+        let vertices = []
+        for (let i = 0; i < numSides; i++) {
+            const theta = (Math.PI * 2 * i) / numSides
+            // calculations to find angle of rotation + offset for polygon angle
+            // to behave as expected (makes 0 degrees )
+            const totalDegreesInShape = 180 * (numSides - 2)
+            const degreeOffset = totalDegreesInShape / (numSides * 2)
+            const rotationAngleInRadians = (rotationAngle + degreeOffset) * Math.PI / 180
+            vertices.push({
+                x: x + (sideLength * Math.cos(theta + rotationAngleInRadians)),
+                y: y + (sideLength * Math.sin(theta + rotationAngleInRadians))
+            })
+        }
+        return vertices
+    }
+
     decomposeShapeToVectors() {
         let vectors = []
         for (let idx = 1; idx < this.points.length; idx++) {
