@@ -1,20 +1,28 @@
 import Convex from './utils/Convex'
 
 class Entity {
-    // Entities are defined by their center (x, y) and boundary points
-    constructor(x, y, color, type, points) {
+    // Entities are defined by their center (x, y) and boundary vertices
+    constructor(x, y, width, height, color, type, vertices, polygonSides) {
         this.x = x
         this.y = y
+        this.width = width
+        this.height = height
         this.color = color
         this.type = type
-        this.points = points
+        this.vertices = vertices
+        this.polygonSides = polygonSides
         this.collisions = []
         this.associatedEntities = [this]
+
+        if (polygonSides !== undefined) {
+            this.vertices = Convex.constructPolygon(x, y, width, polygonSides, 0)
+        }
     }
 
     static Types = {
         Player: "player",
         Weapon: "weapon",
+        Ball: "ball",
         Border: "border"
     }
 
@@ -23,7 +31,7 @@ class Entity {
     }
 
     getHitbox() {
-        return new Convex(this.points)
+        return new Convex(this.vertices)
     }
 
     getGroupedEntities() {
@@ -37,6 +45,22 @@ class Entity {
     draw(context) {
         const hitbox = this.getHitbox()
         hitbox.draw(context, this.color)
+    }
+
+    resolveGameBorderCollision(gameDimensions) {
+        if (this.x - this.width < 1) {
+            this.x = this.width
+        }
+        else if (this.x + this.width > gameDimensions.width) {
+            this.x = gameDimensions.width - this.width
+        }
+
+        if (this.y - this.height < 1) {
+            this.y = this.height
+        }
+        else if (this.y + this.height > gameDimensions.height) {
+            this.y = gameDimensions.height - this.radius
+        }
     }
 
     checkCollision(otherEntity) {
@@ -76,8 +100,14 @@ class Entity {
         this.y += collision.mvtVector.j * collision.mvtMagnitude
     }
 
-    update() {
+    update(vertices) {
+        if (vertices !== undefined) {
+            this.vertices = vertices
+        }
 
+        if (this.polygonSides !== undefined) {
+            this.vertices = Convex.constructPolygon(this.x, this.y, this.width, this.polygonSides, 0)
+        }
     }
 
 }

@@ -2,6 +2,7 @@ import './style.css'
 import Player from './public/Player'
 import Wall from './public/Wall'
 import EntityManager from './public/EntityManager'
+import Ball from './public/Ball'
 
 const GAME_DIMENSIONS = {
   width: innerWidth,
@@ -47,14 +48,14 @@ const clearScreen = (context) => {
 }
 
 // TEMP ENTITIES
-const player = new Player(400, 400, 25, 100, "red")
-const enemy = new Player(400, 200, 25, 100, "green")
-const testWall = new Wall(100, 500, 300, 50)
+const player = new Player(400, 400, 30, 100, "red")
+const enemy = new Player(400, 200, 30, 100, "green")
+const ball = new Ball(200, 200, 50, "yellow")
 
 const manager = new EntityManager()
 manager.addEntity(player)
 manager.addEntity(enemy)
-manager.addEntity(testWall)
+manager.addEntity(ball)
 
 
 
@@ -69,8 +70,8 @@ const gameLoop = () => {
   player.update(GAME_DIMENSIONS)
   player.draw(context)
 
-  testWall.update()
-  testWall.draw(context)
+  ball.update(GAME_DIMENSIONS)
+  ball.draw(context)
 
   requestAnimationFrame(gameLoop)
 }

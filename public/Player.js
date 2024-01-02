@@ -1,15 +1,11 @@
 import Entity from './Entity.js'
 import Sword from './Sword.js'
 
-const MOVE_SPEED = 2
+const MOVE_SPEED = Math.sqrt(2)
 
 class Player extends Entity {
     constructor(x, y, radius, hp, color) {
-        super(x, y, color, Entity.Types.Player,
-            [{ x: x + radius, y: y + radius },
-            { x: x + radius, y: y - radius },
-            { x: x - radius, y: y - radius },
-            { x: x - radius, y: y + radius }])
+        super(x, y, radius, radius, color, Entity.Types.Player, [], 4)
         this.radius = radius
         this.hp = hp
         this.vel = {
@@ -18,7 +14,7 @@ class Player extends Entity {
             dyUp: 0,
             dyDown: 0
         }
-        this.sword = new Sword(x, y, 10, "white")
+        this.sword = new Sword(x, y, 20, "white")
 
         // setup entity group while instantiating
         this.associatedEntities.push(this.sword)
@@ -31,22 +27,6 @@ class Player extends Entity {
             { x: this.x - this.radius, y: this.y - this.radius },
             { x: this.x - this.radius, y: this.y + this.radius }
         ]
-    }
-
-    resolveGameBorderCollision(gameDimensions) {
-        if (this.x - this.radius < 1) {
-            this.x = 1 + this.radius
-        }
-        else if (this.x + this.radius > gameDimensions.width) {
-            this.x = gameDimensions.width - this.radius - 1
-        }
-
-        if (this.y - this.radius < 1) {
-            this.y = 1 + this.radius
-        }
-        else if (this.y + this.radius > gameDimensions.height) {
-            this.y = gameDimensions.height - this.radius - 1
-        }
     }
 
     printCollisions() {
@@ -81,7 +61,6 @@ class Player extends Entity {
         this.y += dy
 
         this.sword.update(this.x, this.y)
-        super.points = this.positionToHitbox()    // update hitbox
         super.update()
     }
 

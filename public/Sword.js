@@ -2,15 +2,12 @@ import Entity from './Entity.js'
 
 class Sword extends Entity {
     constructor(x, y, width, color,) {
-        super(x, y, color, Entity.Types.Weapon,
+        super(x, y, width, width, color, Entity.Types.Weapon,
             [{ x: x + width, y: y + width },
             { x: x + width, y: y - width },
             { x: x - width, y: y - width },
             { x: x - width, y: y + width }])
-        this.x = x
-        this.y = y
-        this.width = width
-        this.swordLength = 75
+        this.length = 100
         this.mouseX = x + 50
         this.mouseY = y
         
@@ -26,7 +23,7 @@ class Sword extends Entity {
         const dy = this.mouseY - this.y
 
         const dist = Math.sqrt(dx**2 + dy**2)
-        const scalingFactor = this.swordLength / dist
+        const scalingFactor = this.length / dist
         const swordTipX = dx * scalingFactor
         const swordTipY = dy * scalingFactor
         return { swordTipX, swordTipY }
@@ -53,9 +50,8 @@ class Sword extends Entity {
     update(x, y) {
         this.x = x
         this.y = y
-        super.points = this.positionToHitbox()
 
-        super.update()
+        super.update(this.positionToHitbox())
     }
 
 }
