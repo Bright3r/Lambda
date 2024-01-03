@@ -4,9 +4,8 @@ import Sword from './Sword.js'
 const MOVE_SPEED = 5
 
 class Player extends Entity {
-    constructor(x, y, radius, hp, color) {
-        super(x, y, radius, radius, color, Entity.Types.Player, [], 4)
-        this.radius = radius
+    constructor(x, y, width, hp, color) {
+        super(x, y, width, width, color, Entity.Types.Player, [], 4)
         this.hp = hp
         this.vel = {
             dxLeft: 0,
@@ -18,15 +17,6 @@ class Player extends Entity {
 
         // setup entity group while instantiating
         this.associatedEntities.push(this.sword)
-    }
-
-    positionToHitbox() {
-        return [
-            { x: this.x + this.radius, y: this.y + this.radius },
-            { x: this.x + this.radius, y: this.y - this.radius },
-            { x: this.x - this.radius, y: this.y - this.radius },
-            { x: this.x - this.radius, y: this.y + this.radius }
-        ]
     }
 
     printCollisions() {
