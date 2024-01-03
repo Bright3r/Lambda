@@ -50,8 +50,8 @@ const clearScreen = (context) => {
 }
 
 // TEMP ENTITIES
-const player = new Player(400, 400, 30, 100, "red")
-const enemy = new Player(400, 200, 30, 100, "green")
+const player = new Player(400, 400, 50, 100, "red")
+const enemy = new Player(400, 200, 50, 100, "green")
 const ball = new Ball(200, 200, 30, "yellow")
 
 const manager = new EntityManager()

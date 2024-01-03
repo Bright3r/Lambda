@@ -10,6 +10,8 @@ class Convex {
 
     // constructs an equilateral polygon and returns its Convex
     static constructPolygon(x, y, sideLength, numSides, rotationAngle) {
+        const radius = sideLength / (2 * Math.sin(Math.PI / numSides))
+
         let vertices = []
         for (let i = 0; i < numSides; i++) {
             const theta = (Math.PI * 2 * i) / numSides
@@ -19,8 +21,8 @@ class Convex {
             const degreeOffset = totalDegreesInShape / (numSides * 2)
             const rotationAngleInRadians = (rotationAngle + degreeOffset) * Math.PI / 180
             vertices.push({
-                x: x + (sideLength * Math.cos(theta + rotationAngleInRadians)),
-                y: y + (sideLength * Math.sin(theta + rotationAngleInRadians))
+                x: x + (radius * Math.cos(theta + rotationAngleInRadians)),
+                y: y + (radius * Math.sin(theta + rotationAngleInRadians))
             })
         }
         return vertices

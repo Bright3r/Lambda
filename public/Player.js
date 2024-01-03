@@ -13,7 +13,7 @@ class Player extends Entity {
             dyUp: 0,
             dyDown: 0
         }
-        this.sword = new Sword(x, y, 20, "white")
+        this.sword = new Sword(x, y, 15, "white")
 
         // setup entity group while instantiating
         this.associatedEntities.push(this.sword)

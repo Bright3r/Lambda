@@ -1,10 +1,12 @@
 import Entity from "./Entity";
 
 const BALL_MOVE_SPEED = 5
+const NUM_SIDES = 24    // approximate circle with high degree polygon
 
 class Ball extends Entity {
     constructor(x, y, radius, color) {
-        super(x, y, radius, radius, color, Entity.Types.Ball, [], 12)
+        const width = 2 * radius * Math.sin(Math.PI / NUM_SIDES)
+        super(x, y, width, width, color, Entity.Types.Ball, [], NUM_SIDES)
         this.radius = radius
         this.vel = {
             dx: BALL_MOVE_SPEED,
