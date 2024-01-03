@@ -59,7 +59,7 @@ class Entity {
             this.y = this.height
         }
         else if (this.y + this.height > gameDimensions.height) {
-            this.y = gameDimensions.height - this.radius
+            this.y = gameDimensions.height - this.height
         }
     }
 
