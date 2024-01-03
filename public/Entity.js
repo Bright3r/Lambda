@@ -23,6 +23,7 @@ class Entity {
         Player: "player",
         Weapon: "weapon",
         Ball: "ball",
+        Goal: "goal",
         Border: "border"
     }
 

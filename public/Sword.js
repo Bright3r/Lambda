@@ -1,13 +1,16 @@
 import Entity from './Entity.js'
 
+const WIDTH = 15
+const LENGTH = 100
+
 class Sword extends Entity {
-    constructor(x, y, width, color,) {
-        super(x, y, width, width, color, Entity.Types.Weapon,
-            [{ x: x + width, y: y + width },
-            { x: x + width, y: y - width },
-            { x: x - width, y: y - width },
-            { x: x - width, y: y + width }])
-        this.length = 100
+    constructor(x, y, color,) {
+        super(x, y, WIDTH, WIDTH, color, Entity.Types.Weapon,
+            [{ x: x + WIDTH, y: y + WIDTH },
+            { x: x + WIDTH, y: y - WIDTH },
+            { x: x - WIDTH, y: y - WIDTH },
+            { x: x - WIDTH, y: y + WIDTH }])
+        this.length = LENGTH
         this.mouseX = x + 50
         this.mouseY = y
         

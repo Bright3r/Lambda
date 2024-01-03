@@ -7,7 +7,11 @@ class Vector2d {
     }
 
     getNormalizedVector() {
-        return this.getScaledVector(1 / this.getMagnitude())    // scale vector by inverse of its magnitude
+        const magnitude = this.getMagnitude()
+        if (magnitude === 0) {
+            return new Vector2d(0, 0)   // prevent division by 0
+        }
+        return this.getScaledVector(1 / magnitude)    // scale vector by inverse of its magnitude
     }
 
     getMagnitude() {
