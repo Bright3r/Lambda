@@ -9,6 +9,8 @@ const GAME_DIMENSIONS = {
   height: innerHeight
 }
 
+const FPS = 60
+
 const handleKeyDown = e => {
   switch (e.code) {
       case "KeyW":
@@ -50,7 +52,7 @@ const clearScreen = (context) => {
 // TEMP ENTITIES
 const player = new Player(400, 400, 30, 100, "red")
 const enemy = new Player(400, 200, 30, 100, "green")
-const ball = new Ball(200, 200, 50, "yellow")
+const ball = new Ball(200, 200, 30, "yellow")
 
 const manager = new EntityManager()
 manager.addEntity(player)
@@ -73,7 +75,9 @@ const gameLoop = () => {
   ball.update(GAME_DIMENSIONS)
   ball.draw(context)
 
-  requestAnimationFrame(gameLoop)
+  setTimeout(() => {
+    requestAnimationFrame(gameLoop)
+  }, 1000 / FPS)
 }
 
 // -------------> PAGE STARTUP <------------- \\

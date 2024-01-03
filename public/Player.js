@@ -1,7 +1,7 @@
 import Entity from './Entity.js'
 import Sword from './Sword.js'
 
-const MOVE_SPEED = Math.sqrt(2)
+const MOVE_SPEED = 5
 
 class Player extends Entity {
     constructor(x, y, radius, hp, color) {

@@ -1,10 +1,10 @@
 import Entity from "./Entity";
 
-const BALL_MOVE_SPEED = Math.sqrt(2)
+const BALL_MOVE_SPEED = 5
 
 class Ball extends Entity {
     constructor(x, y, radius, color) {
-        super(x, y, radius, radius, color, Entity.Types.Ball, [], 24)
+        super(x, y, radius, radius, color, Entity.Types.Ball, [], 12)
         this.radius = radius
         this.vel = {
             dx: BALL_MOVE_SPEED,
@@ -47,17 +47,17 @@ class Ball extends Entity {
 
                 const player = collision.entity
                 if (player.x < this.x) {
-                    this.vel.dx = 1
+                    this.vel.dx = BALL_MOVE_SPEED
                 }
                 else if (player.x > this.x) {
-                    this.vel.dx = -1
+                    this.vel.dx = -BALL_MOVE_SPEED
                 }
 
                 if (player.y < this.y) {
-                    this.vel.dy = 1
+                    this.vel.dy = BALL_MOVE_SPEED
                 }
                 else if (player.y > this.y) {
-                    this.vel.dy = -1
+                    this.vel.dy = -BALL_MOVE_SPEED
                 }
             }
         }
