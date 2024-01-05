@@ -1,7 +1,9 @@
 
 
-class EntityManager {
-    constructor() {
+class GameManager {
+    constructor(team1, team2) {
+        this.team1 = team1
+        this.team2 = team2
         this.entities = []
     }
 
@@ -15,7 +17,8 @@ class EntityManager {
         this.entities.splice(idx)
     }
 
-    update() {
+    update(context, gameDimensions) {
+        // handle collisions
         for (let i = 0; i < this.entities.length; i++) {
             const entity1 = this.entities[i]
             entity1.collisions = [] // reset collisions every frame
@@ -29,7 +32,13 @@ class EntityManager {
                 }
             }
         }
+
+        // update entities
+        this.entities.forEach(entity => {
+            entity.update(gameDimensions)
+            entity.draw(context)
+        })
     }
 }
 
-export default EntityManager
+export default GameManager

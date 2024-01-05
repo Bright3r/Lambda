@@ -1,7 +1,7 @@
 import Entity from "./Entity";
 
-const BALL_MOVE_SPEED = 5
-const NUM_SIDES = 48    // approximate circle with high degree polygon
+const BALL_MOVE_SPEED = 7.5
+const NUM_SIDES = 12    // approximate circle with high degree polygon
 
 class Ball extends Entity {
     constructor(x, y, radius, color) {

@@ -1,9 +1,9 @@
 import './style.css'
 import Player from './public/Player'
-import Wall from './public/Wall'
-import EntityManager from './public/EntityManager'
+import GameManager from './public/GameManager'
 import Ball from './public/Ball'
 import Goal from './public/Goal'
+import Team from './public/Team'
 
 const GAME_DIMENSIONS = {
   width: innerWidth,
@@ -54,31 +54,24 @@ const clearScreen = (context) => {
 const player = new Player(400, 400, 50, "red")
 const enemy = new Player(400, 200, 50, "green")
 const ball = new Ball(200, 200, 30, "yellow")
-const goal = new Goal(100, 200, 20, 0, "blue")
 
-const manager = new EntityManager()
+const redTeam = new Team([player], "red")
+const greenTeam = new Team([enemy], "green")
+const goal1 = new Goal(100, (GAME_DIMENSIONS.height / 2) - 50, 25, 200, "green", greenTeam)
+const goal2 = new Goal(GAME_DIMENSIONS.width - 100, (GAME_DIMENSIONS.height / 2) - 50, 25, 200, "red", redTeam)
+
+const manager = new GameManager(redTeam, greenTeam, GAME_DIMENSIONS)
 manager.addEntity(player)
 manager.addEntity(enemy)
 manager.addEntity(ball)
-manager.addEntity(goal)
+manager.addEntity(goal1)
+manager.addEntity(goal2)
 
 
 const gameLoop = () => {
   clearScreen(context)
 
-  manager.update()
-
-  enemy.update(GAME_DIMENSIONS)
-  enemy.draw(context)
-
-  player.update(GAME_DIMENSIONS)
-  player.draw(context)
-
-  ball.update(GAME_DIMENSIONS)
-  ball.draw(context)
-
-  // goal.update(GAME_DIMENSIONS)
-  // goal.draw(context)
+  manager.update(context, GAME_DIMENSIONS)
 
   setTimeout(() => {
     requestAnimationFrame(gameLoop)

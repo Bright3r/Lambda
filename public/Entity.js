@@ -67,7 +67,7 @@ class Entity {
     checkCollision(otherEntity) {
         const hitbox = this.getHitbox()
         const otherHitbox = otherEntity.getHitbox()
-        const collision =  hitbox.getCollision(otherHitbox)
+        const collision = hitbox.getCollision(otherHitbox)
         return collision
     }
 
