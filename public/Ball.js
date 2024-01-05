@@ -9,7 +9,7 @@ class Ball extends Entity {
         super(x, y, width, width, color, Entity.Types.Ball, [], NUM_SIDES)
         this.radius = radius
         this.vel = {
-            dx: BALL_MOVE_SPEED,
+            dx: 0,
             dy: BALL_MOVE_SPEED
         }
     }

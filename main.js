@@ -50,15 +50,17 @@ const clearScreen = (context) => {
   context.clearRect(0, 0, GAME_DIMENSIONS.width, GAME_DIMENSIONS.height)
 }
 
-// TEMP ENTITIES
-const player = new Player(400, 400, 50, "red")
-const enemy = new Player(400, 200, 50, "green")
-const ball = new Ball(200, 200, 30, "yellow")
+const goal1Pos = { x: 125, y: GAME_DIMENSIONS.height / 2 }
+const goal2Pos = { x: GAME_DIMENSIONS.width - 125, y: GAME_DIMENSIONS.height / 2}
+
+const player = new Player(goal1Pos.x + 100, goal1Pos.y, 50, "red")
+const enemy = new Player(goal2Pos.x - 100, goal2Pos.y, 50, "green")
+const ball = new Ball(GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2, 30, "yellow")
 
 const redTeam = new Team([player], "red")
 const greenTeam = new Team([enemy], "green")
-const goal1 = new Goal(100, (GAME_DIMENSIONS.height / 2) - 50, 25, 200, "green", greenTeam)
-const goal2 = new Goal(GAME_DIMENSIONS.width - 100, (GAME_DIMENSIONS.height / 2) - 50, 25, 200, "red", redTeam)
+const goal1 = new Goal(goal1Pos.x, goal1Pos.y, 25, 200, "green", greenTeam)
+const goal2 = new Goal(goal2Pos.x, goal1Pos.y, 25, 200, "red", redTeam)
 
 const manager = new GameManager(redTeam, greenTeam, GAME_DIMENSIONS)
 manager.addEntity(player)

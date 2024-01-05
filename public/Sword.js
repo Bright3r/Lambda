@@ -51,10 +51,12 @@ class Sword extends Entity {
     }
 
     update(x, y) {
-        this.x = x
-        this.y = y
-
-        super.update(this.positionToHitbox())
+        if (y !== undefined) {  // only update if both arguments passed
+            this.x = x
+            this.y = y
+    
+            super.update(this.positionToHitbox())
+        }
     }
 
 }

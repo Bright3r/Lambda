@@ -3,11 +3,12 @@ import Entity from "./Entity";
 
 class Goal extends Entity {
     constructor(x, y, width, height, color, enemyTeam) {
+        const topLeft = { x: x - (width / 2), y: y - (height / 2)}
         super(x, y, width, height, color, Entity.Types.Goal, [
-            { x: x, y: y },
-            { x: x + width, y: y },
-            { x: x + width, y: y + height },
-            { x: x, y: y + height }
+            { x: topLeft.x, y: topLeft.y },
+            { x: topLeft.x + width, y: topLeft.y },
+            { x: topLeft.x + width, y: topLeft.y + height },
+            { x: topLeft.x, y: topLeft.y + height }
         ])
         this.enemyTeam = enemyTeam
     }
@@ -16,7 +17,6 @@ class Goal extends Entity {
         for (let i = 0; i < this.collisions.length; i++) {
             const collision = this.collisions[i]
             if (collision.entity.type === Entity.Types.Ball) {
-                console.log(this.enemyTeam)
                 this.enemyTeam.goal()
             }
         }
