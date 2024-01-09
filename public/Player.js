@@ -15,14 +15,10 @@ class Player extends Entity {
             dyUp: 0,
             dyDown: 0
         }
-        this.sword = new Sword(x, y, "white")
+        this.sword = new Sword(x, y, "#353535")
 
         // setup entity group while instantiating
         this.associatedEntities.push(this.sword)
-    }
-
-    printCollisions() {
-        console.log(this.collisions)
     }
 
     draw(context) {

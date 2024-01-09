@@ -16,9 +16,6 @@ class Team {
         this.players.splice(idx)
     }
 
-    goal() {
-        this.score++
-    }
 }
 
 export default Team

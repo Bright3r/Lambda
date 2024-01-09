@@ -14,6 +14,14 @@ class Ball extends Entity {
         }
     }
 
+    reset() {
+        super.reset()
+        this.vel = {
+            dx: 0,
+            dy: BALL_MOVE_SPEED
+        }
+    }
+
     draw(context) {
         context.fillStyle = this.color
         context.beginPath()

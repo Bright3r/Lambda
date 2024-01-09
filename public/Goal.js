@@ -14,13 +14,7 @@ class Goal extends Entity {
     }
 
     update() {
-        for (let i = 0; i < this.collisions.length; i++) {
-            const collision = this.collisions[i]
-            if (collision.entity.type === Entity.Types.Ball) {
-                this.enemyTeam.goal()
-            }
-        }
-        // super.update(this.vertices)
+
     }
 }
 

@@ -13,6 +13,7 @@ class Entity {
         this.polygonSides = polygonSides
         this.collisions = []
         this.associatedEntities = [this]
+        this.originalPos = { x, y }
 
         if (polygonSides !== undefined) {
             this.vertices = Convex.constructPolygon(x, y, width, polygonSides, 0)
@@ -41,6 +42,11 @@ class Entity {
 
     isFriendly(otherEntity) {
         return this.associatedEntities.includes(otherEntity)
+    }
+
+    reset() {
+        this.x = this.originalPos.x
+        this.y = this.originalPos.y
     }
 
     draw(context) {
