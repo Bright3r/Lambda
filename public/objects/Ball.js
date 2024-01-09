@@ -1,4 +1,4 @@
-import Entity from "./Entity";
+import Entity from "./Entity.js";
 
 const BALL_MOVE_SPEED = 7.5
 const NUM_SIDES = 12    // approximate circle with high degree polygon

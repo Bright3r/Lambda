@@ -1,5 +1,5 @@
-import Vector2d from './Vector2d'
-import Projection from './Projection'
+import Vector2d from './Vector2d.js'
+import Projection from './Projection.js'
 
 class Convex {
     // points must be given such that if the shape is created

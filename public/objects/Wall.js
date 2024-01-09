@@ -1,4 +1,4 @@
-import Entity from "./Entity";
+import Entity from "./Entity.js";
 
 class Wall extends Entity {
     // (x,y) should refer to top left corner rather than center

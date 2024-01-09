@@ -1,4 +1,4 @@
-import Convex from '../utils/Convex'
+import Convex from '../utils/Convex.js'
 
 class Entity {
     // Entities are defined by their center (x, y) and boundary vertices

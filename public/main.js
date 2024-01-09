@@ -1,16 +1,16 @@
-import '../style.css'
-import Player from './objects/Player'
-import GameManager from './objects/GameManager'
-import Ball from './objects/Ball'
-import Goal from './objects/Goal'
-import Team from './objects/Team'
+import Player from './objects/Player.js'
+import GameManager from './objects/GameManager.js'
+import Ball from './objects/Ball.js'
+import Goal from './objects/Goal.js'
+import Team from './objects/Team.js'
 
 const GAME_DIMENSIONS = {
 	width: innerWidth,
 	height: innerHeight
 }
-
 const FPS = 60
+
+const socket = io()
 
 const handleKeyDown = e => {
 	switch (e.code) {
