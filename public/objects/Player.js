@@ -1,6 +1,6 @@
 import Entity from './Entity.js'
 import Sword from './Sword.js'
-import Vector2d from './utils/Vector2d.js'
+import Vector2d from '../utils/Vector2d.js'
 
 const MOVE_SPEED = 10    // make same as ball speed to stop ball clipping
 // going to keep it higher for now b/c ball clipping might be a fun mechanic

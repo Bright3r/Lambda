@@ -1,9 +1,9 @@
-import './style.css'
-import Player from './public/Player'
-import GameManager from './public/GameManager'
-import Ball from './public/Ball'
-import Goal from './public/Goal'
-import Team from './public/Team'
+import '../style.css'
+import Player from './objects/Player'
+import GameManager from './objects/GameManager'
+import Ball from './objects/Ball'
+import Goal from './objects/Goal'
+import Team from './objects/Team'
 
 const GAME_DIMENSIONS = {
 	width: innerWidth,
