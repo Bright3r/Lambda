@@ -131,6 +131,8 @@ const drawInstructions = () => {
 	context.fillText("Player2 uses IJKL to move", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2 + (lineHeight * 2))
 	context.fillText("Whoever is losing gets a sword", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2 + (lineHeight * 4))
 	context.fillText("Control the sword with your mouse", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2 + (lineHeight * 6))
+
+	context.fillText("Axis Punch by Chase Barman", GAME_DIMENSIONS.width / 2, (GAME_DIMENSIONS.height * 3 / 4) + lineHeight)
 }
 
 const drawStart = () => {
