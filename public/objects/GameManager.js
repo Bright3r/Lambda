@@ -60,9 +60,13 @@ class GameManager {
 
     drawScore(context, gameDimensions) {
         context.fillStyle = "white"
-        context.font = "50px serif"
+        context.font = "50px Courier New"
+        context.textAlign = "center"
         context.fillText(this.team1.score.toString(), gameDimensions.width / 4, 50)
         context.fillText(this.team2.score.toString(), gameDimensions.width * 3 / 4, 50)
+
+        context.font = "60px Courier New"
+        context.fillText("|", gameDimensions.width / 2, 50)
     }
 
     update(context, gameDimensions) {

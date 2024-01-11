@@ -68,7 +68,7 @@ const handleKeyUp = e => {
 	}
 }
 
-const clearScreen = (context) => {
+const clearScreen = () => {
 	context.clearRect(0, 0, GAME_DIMENSIONS.width, GAME_DIMENSIONS.height)
 }
 
@@ -116,7 +116,49 @@ const context = canvas.getContext('2d')
 canvas.width = GAME_DIMENSIONS.width
 canvas.height = GAME_DIMENSIONS.height
 
-window.addEventListener('keydown', handleKeyDown)
-window.addEventListener('keyup', handleKeyUp)
+const startGame = () => {
+	window.addEventListener('keydown', handleKeyDown)
+	window.addEventListener('keyup', handleKeyUp)
+	
+	gameLoop()
+}
 
-gameLoop()
+const drawInstructions = () => {	
+	const lineHeight = 15
+	context.lineHeight = lineHeight
+	context.font = "25px Courier New"
+	context.fillText("Player1 uses WASD to move", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2)
+	context.fillText("Player2 uses IJKL to move", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2 + (lineHeight * 2))
+	context.fillText("Whoever is losing gets a sword", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2 + (lineHeight * 4))
+	context.fillText("Control the sword with your mouse", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2 + (lineHeight * 6))
+}
+
+const drawStart = () => {
+	context.fillStyle = "white"
+	context.font = "50px Courier New"
+	context.textAlign = "center"
+	context.fillText("Press Enter to Start", GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 4)
+}
+
+const startupInstructions = () => {
+	window.addEventListener('keydown', e => {
+		if (e.code === "Enter") {
+			setTimeout(() => startGame(), 250)
+			clearInterval(instructionsInterval)
+		}
+	}, { once: true })
+
+	const instructionsInterval = setInterval(() => {
+		drawStart()
+		drawInstructions()
+
+		// arcade blinking effect
+		setTimeout(() => {
+			clearScreen()
+			drawInstructions()
+		}, 250)
+
+	}, 500)
+}
+
+startupInstructions()
