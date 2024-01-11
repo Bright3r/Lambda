@@ -2,7 +2,7 @@ import Convex from '../utils/Convex.js'
 
 class Entity {
     // Entities are defined by their center (x, y) and boundary vertices
-    constructor(x, y, width, height, color, type, vertices, polygonSides) {
+    constructor(x, y, width, height, color, type, vertices, polygonSides, angle) {
         this.x = x
         this.y = y
         this.width = width
@@ -11,9 +11,14 @@ class Entity {
         this.type = type
         this.vertices = vertices
         this.polygonSides = polygonSides
+        this.angle = angle
         this.collisions = []
         this.associatedEntities = [this]
         this.originalPos = { x, y }
+
+        if (angle === undefined) {
+            this.angle = 0
+        }
 
         if (polygonSides !== undefined) {
             this.vertices = Convex.constructPolygon(x, y, width, polygonSides, 0)
@@ -42,6 +47,10 @@ class Entity {
 
     isFriendly(otherEntity) {
         return this.associatedEntities.includes(otherEntity)
+    }
+
+    rotate(degrees) {
+        this.angle += degrees
     }
 
     reset() {
@@ -111,9 +120,8 @@ class Entity {
         if (vertices !== undefined) {
             this.vertices = vertices
         }
-
-        if (this.polygonSides !== undefined) {
-            this.vertices = Convex.constructPolygon(this.x, this.y, this.width, this.polygonSides, 0)
+        else if (this.polygonSides !== undefined) {
+            this.vertices = Convex.constructPolygon(this.x, this.y, this.width, this.polygonSides, this.angle)
         }
     }
 

@@ -76,6 +76,7 @@ class Ball extends Entity {
         this.x += this.vel.dx
         this.y += this.vel.dy
 
+        this.rotate(1)
         super.update()
     }
 }
