@@ -7,6 +7,18 @@ class Team {
         this.score = 0
     }
 
+    removeSwords() {
+        this.players.forEach(player => {
+            player.removeSword()
+        })
+    }
+
+    equipSwords() {
+        this.players.forEach(player => {
+            player.equipSword()
+        })
+    }
+
     addMember(player) {
         this.players.push(player)
     }

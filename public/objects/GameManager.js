@@ -9,12 +9,47 @@ class GameManager {
 
     addEntity(entity) {
         const entityGroup = entity.getGroupedEntities()
-        entityGroup.forEach(ent => this.entities.push(ent))
+        entityGroup.forEach(entity => this.entities.push(entity))
     }
 
     removeEntity(entity) {
-        const idx = this.entities.indexOf(entity)
-        this.entities.splice(idx)
+        if (entity !== undefined) {
+            const idx = this.entities.indexOf(entity)
+            if (idx >= 0) {
+                this.entities.splice(idx, 1)
+            }
+        }
+    }
+
+    refreshTeam(team) {
+        team.players.forEach(player => {
+            this.removeEntity(player)
+            this.addEntity(player)
+        })
+    }
+
+    handleSwords() {
+        this.team1.players.forEach(player => {
+            this.removeEntity(player.sword)
+        })
+        this.team2.players.forEach(player => {
+            this.removeEntity(player.sword)
+        })
+
+        if (this.team1.score === this.team2.score) {
+            this.team1.removeSwords()
+            this.team2.removeSwords()
+        }
+        else {
+            let losingTeam = this.team1
+            if (this.team2.score < this.team1.score) {
+                losingTeam = this.team2
+            }
+            losingTeam.equipSwords()
+        }
+
+        this.refreshTeam(this.team1)
+        this.refreshTeam(this.team2)
     }
 
     resetEntities() {

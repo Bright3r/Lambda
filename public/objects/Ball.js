@@ -1,7 +1,7 @@
 import Entity from "./Entity.js";
 
 const BALL_MOVE_SPEED = 7.5
-const NUM_SIDES = 12    // approximate circle with high degree polygon
+const NUM_SIDES = 3    // approximate circle with high degree polygon
 
 class Ball extends Entity {
     constructor(x, y, radius, color) {
@@ -22,13 +22,13 @@ class Ball extends Entity {
         }
     }
 
-    draw(context) {
-        context.fillStyle = this.color
-        context.beginPath()
-        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
-        context.fill()
-        context.closePath()
-    }
+    // draw(context) {
+    //     context.fillStyle = this.color
+    //     context.beginPath()
+    //     context.arc(this.x, this.y, this.radius, 0, Math.PI * 2)
+    //     context.fill()
+    //     context.closePath()
+    // }
 
     resolveGameBorderCollision(gameDimensions) {
         if (this.x - this.radius < 1) {
@@ -51,7 +51,8 @@ class Ball extends Entity {
 
         for (let i = 0; i < this.collisions.length; i++) {
             const collision = this.collisions[i]
-            if (collision.entity.type === Entity.Types.Player) {
+            if (collision.entity.type === Entity.Types.Player || 
+                collision.entity.type === Entity.Types.Weapon) {
                 this.x += collision.mvtVector.i
                 this.y += collision.mvtVector.j
 

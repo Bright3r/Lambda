@@ -2,28 +2,40 @@ import Entity from './Entity.js'
 import Sword from './Sword.js'
 import Vector2d from '../utils/Vector2d.js'
 
-const MOVE_SPEED = 10    // make same as ball speed to stop ball clipping
-// going to keep it higher for now b/c ball clipping might be a fun mechanic
-// NOTE: if move speed double the ball move speed, ball clipping is very consistent
+const MOVE_SPEED = 10
 
 class Player extends Entity {
     constructor(x, y, width, color) {
-        super(x, y, width, width, color, Entity.Types.Player, [], 4)
+        super(x, y, width, width, color, Entity.Types.Player, [], 8)
         this.vel = {
             dxLeft: 0,
             dxRight: 0,
             dyUp: 0,
             dyDown: 0
         }
-        this.sword = new Sword(x, y, "#353535")
+        this.sword = undefined
+    }
 
-        // setup entity group while instantiating
-        this.associatedEntities.push(this.sword)
+    removeSword() {
+        const swordIdx = this.associatedEntities.indexOf(this.sword)
+        if (swordIdx >= 0) {
+            this.associatedEntities.splice(swordIdx, 1)
+        }
+        this.sword = undefined
+    }
+
+    equipSword() {
+        if (this.sword === undefined) {
+            this.sword = new Sword(this.x, this.y, "#353535")
+            this.associatedEntities.push(this.sword)
+        }
     }
 
     draw(context) {
         super.draw(context)
-        this.sword.draw(context)
+        if (this.sword !== undefined) {
+            this.sword.draw(context)
+        }
     }
 
     update(gameDimensions) {
@@ -48,7 +60,10 @@ class Player extends Entity {
         this.x += movementVec.i
         this.y += movementVec.j
 
-        this.sword.update(this.x, this.y)
+        if (this.sword !== undefined) {
+            this.sword.update(this.x, this.y)
+        }
+
         super.update()
     }
 

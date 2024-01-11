@@ -10,21 +10,31 @@ const GAME_DIMENSIONS = {
 }
 const FPS = 60
 
-const socket = io()
-
 const handleKeyDown = e => {
 	switch (e.code) {
 		case "KeyW":
-			player.vel.dyUp = -1
+			player1.vel.dyUp = -1
 			break
 		case "KeyA":
-			player.vel.dxLeft = -1
+			player1.vel.dxLeft = -1
 			break
 		case "KeyS":
-			player.vel.dyDown = 1
+			player1.vel.dyDown = 1
 			break
 		case "KeyD":
-			player.vel.dxRight = 1
+			player1.vel.dxRight = 1
+			break
+		case "KeyI":
+			player2.vel.dyUp = -1
+			break
+		case "KeyJ":
+			player2.vel.dxLeft = -1
+			break
+		case "KeyK":
+			player2.vel.dyDown = 1
+			break
+		case "KeyL":
+			player2.vel.dxRight = 1
 			break
 	}
 }
@@ -32,16 +42,28 @@ const handleKeyDown = e => {
 const handleKeyUp = e => {
 	switch (e.code) {
 		case "KeyW":
-			player.vel.dyUp = 0
+			player1.vel.dyUp = 0
 			break
 		case "KeyA":
-			player.vel.dxLeft = 0
+			player1.vel.dxLeft = 0
 			break
 		case "KeyS":
-			player.vel.dyDown = 0
+			player1.vel.dyDown = 0
 			break
 		case "KeyD":
-			player.vel.dxRight = 0
+			player1.vel.dxRight = 0
+			break
+		case "KeyI":
+			player2.vel.dyUp = 0
+			break
+		case "KeyJ":
+			player2.vel.dxLeft = 0
+			break
+		case "KeyK":
+			player2.vel.dyDown = 0
+			break
+		case "KeyL":
+			player2.vel.dxRight = 0
 			break
 	}
 }
@@ -53,18 +75,18 @@ const clearScreen = (context) => {
 const goal1Pos = { x: 125, y: GAME_DIMENSIONS.height / 2 }
 const goal2Pos = { x: GAME_DIMENSIONS.width - 125, y: GAME_DIMENSIONS.height / 2 }
 
-const player = new Player(goal1Pos.x + 100, goal1Pos.y, 50, "red")
-const enemy = new Player(goal2Pos.x - 100, goal2Pos.y, 50, "green")
+const player1 = new Player(goal1Pos.x + 100, goal1Pos.y, 25, "red")
+const player2 = new Player(goal2Pos.x - 100, goal2Pos.y, 25, "green")
 const ball = new Ball(GAME_DIMENSIONS.width / 2, GAME_DIMENSIONS.height / 2, 30, "yellow")
 
-const redTeam = new Team([player], "red")
-const greenTeam = new Team([enemy], "green")
+const redTeam = new Team([player1], "red")
+const greenTeam = new Team([player2], "green")
 const goal1 = new Goal(goal1Pos.x, goal1Pos.y, 25, 200, "white", greenTeam)
 const goal2 = new Goal(goal2Pos.x, goal1Pos.y, 25, 200, "white", redTeam)
 
 const manager = new GameManager(redTeam, greenTeam, GAME_DIMENSIONS)
-manager.addEntity(player)
-manager.addEntity(enemy)
+manager.addEntity(player1)
+manager.addEntity(player2)
 manager.addEntity(ball)
 manager.addEntity(goal1)
 manager.addEntity(goal2)
@@ -84,6 +106,7 @@ const gameLoop = () => {
 
 const reset = () => {
 	manager.resetEntities()
+	manager.handleSwords()
 	setTimeout(gameLoop, 1000)
 }
 
